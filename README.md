@@ -70,6 +70,30 @@ The simulator can be used for both divisions, but the only things that change be
 The default is the division B and it is possible to select this division just by starting the binary with the command `simulator-cli` or by selecting the geometry file for division B `simulator-cli -g 2020B`.
 To select the division A settings, call `simulator-cli -g 2020`.
 
+#### Created SSL EL division
+By default, `simulator-cli` will initialize with the settings referring to `simulator-cli -g 2023EL --realism None` and can only be run as `simulator-cli` without the args.
+
+Following the following settings:
+```bash
+ field_width: 3.0
+ field_height: 4.5
+ goal_width: 0.8
+ goal_depth: 0.18
+ defense_radius: 1.0
+ defense_stretch: 2.0
+```
+Furthermore, we have the division initialized for EL with the number of robots set to 3 on both teams.
+
+how the default team was defined to start in EL style. was changed in the source code `simulator.cpp` if no argument is defined, it recognizes the 2023EL configuration by default.
+```cpp
+ QCommandLineOption geometryConfig({"g", "geometry"}, "The geometry file to load as default", "file", "2023EL");
+```
+In addition, also the number of robots:
+```cpp
+ int totalNumRobots = chosenConfig == "2023EL" ? 3:11;
+```
+
+
 
 ### Other utilities
 This repo also contains various utilities:
@@ -81,6 +105,7 @@ This repo also contains various utilities:
 - `visionextractor` - extract a SSL vision log from our own log format.
 
 These executables are found alongside the Ra executable. Run them with `-h` for further usage information.
+
 
 ## Language services and Tests
 A guide for setting up linting services and editor integration is provided at
